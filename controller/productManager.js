@@ -1,5 +1,4 @@
-const fs =  require('fs');
-
+import fs from 'fs';
 class ProductManager {
     constructor(path){
         this.path = path;
@@ -20,8 +19,6 @@ class ProductManager {
     }
     async addProduct(title,description,price,thumbnail,code,stock){
         try{
-            const products = await this.getProducts();
-
             const product ={
                 id: await this.#generateId(),
                 title,
@@ -31,7 +28,12 @@ class ProductManager {
                 code,
                 stock
             }
+
+            const products = await this.getProducts();
+
+            
             products.push(product);
+            //console.log(products);
             await fs.promises.writeFile(this.path,JSON.stringify(products));
         }catch(error){
             console.log(error);
@@ -83,3 +85,12 @@ class ProductManager {
 }
 
 export const getProducts = new ProductManager('./products.json');
+/*async function test(){
+    await getProducts.addProduct('iphone 14','smartphone',799,'no-img',123456,10);
+    await getProducts.addProduct('ipad air','tablet',499,'no-img',123457,8);
+    await getProducts.addProduct('macbook air','laptop',999,'no-img',123458,7);
+    await getProducts.addProduct('macbook pro','laptop',1199,'no-img',123459,5);
+    await getProducts.addProduct('iphone 14 pro','smartphone',999,'no-img',123460,11);
+    await getProducts.addProduct('ipad pro','tablet',799,'no-img',123461,6);
+}
+test();*/
