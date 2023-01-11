@@ -10,10 +10,16 @@ app.get('/', (req, res) => {
     res.send('Hola mundo');
 });
 
-app.get('/productos', async (req, res) => {
+app.get('/products', async (req, res) => {
     const {limit} = req.query;
     const products = await productManager.getProducts(limit || "max");
     res.json(products);
+});
+
+app.get('/products/:pid', async (req, res) => {
+    const {pid} = req.params;
+    const product = await productManager.getProductById(pid);
+    res.json(product);
 });
 
 app.listen(PORT, () => {

@@ -48,7 +48,7 @@ export class ProductManager {
 
     async getProductById(id){
         const products = await this.getProducts();
-        const product = products.find((product) => product.id === id);
+        const product = products.find((product) => product.id === parseInt(id));
         if (product === undefined)  return console.log("Not found")
         else return product;
     }
