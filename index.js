@@ -11,7 +11,8 @@ app.get('/', (req, res) => {
 });
 
 app.get('/productos', async (req, res) => {
-    const products = await productManager.getProducts();
+    const {limit} = req.query;
+    const products = await productManager.getProducts(limit || "max");
     res.json(products);
 });
 

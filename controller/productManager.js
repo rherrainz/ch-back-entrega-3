@@ -1,14 +1,19 @@
 import fs from 'fs';
-class ProductManager {
+export class ProductManager {
     constructor(path){
         this.path = path;
     }
-    async getProducts(){
+    async getProducts(limit){
         try{
             if(fs.existsSync(this.path)){
                 const infoProducts = await fs.promises.readFile(this.path, 'utf-8');
-                const infoProductsJS = JSON.parse(infoProducts);
-                return infoProductsJS;
+                if(limit === 'max'){
+                    const infoProductsJS = JSON.parse(infoProducts);
+                    return infoProductsJS;
+                }else{
+                    const infoProductsJS = JSON.parse(infoProducts).slice(0,limit);
+                    return infoProductsJS;
+                }
             }else{
                 return [];
             }
